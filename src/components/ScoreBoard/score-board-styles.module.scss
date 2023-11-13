@@ -1,11 +1,16 @@
 .container {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   position: relative;
-  height: 20%;
+  height: 15%;
   gap: 0.5em;
 }
 
 .brain-counter {color:green}
 
 .shot-counter {color:red}
+
+.score-panel {
+  display: flex;
+  flex-direction: column;
+}

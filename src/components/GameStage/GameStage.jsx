@@ -131,13 +131,15 @@ const GameStage = () => {
 
   return (
     <div className={style['container']}>
-      <div className={style['screen']} style={{ visibility: turn === 0 ? 'hidden' : 'visible' }}>
+      <div className={style['roll-panel']} style={{ visibility: turn === 0 ? 'hidden' : 'visible' }}>
         {playerHand.length > 0 && score < 13 && turnPhase === 'Draw' && playerHand.map((die) => <span key={uuidv4()}>{die.color}</span>)}
         {rollResult.length > 0 && score < 13 &&turnPhase === 'Roll' && rollResult.map((face) => <span key={uuidv4()}>{face}</span>)}
         {score >= 13 && <h2>Victory!</h2>}
       </div>
-      {score <= 13 &&<button ref={playButtonRef} onClick={handlePlayButtonClick}>{playButtonMessage}</button>}
-      {score <= 13 &&<button ref={skipButtonRef} onClick={handleSkipButtonClick} style={{ visibility: turnPhase === '' ? 'hidden' : 'visible' }}>End Turn</button>}
+      <div className={style['control-panel']}>
+        {score <= 13 &&<button ref={playButtonRef} onClick={handlePlayButtonClick}>{playButtonMessage}</button>}
+        {score <= 13 &&<button ref={skipButtonRef} onClick={handleSkipButtonClick} style={{ visibility: turnPhase === '' ? 'hidden' : 'visible' }}>End Turn</button>}
+      </div>
     </div>
   );
 };
