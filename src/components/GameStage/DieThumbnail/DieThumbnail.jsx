@@ -1,10 +1,10 @@
 import style from './die-thumb-styles.module.scss';
 
-const DieThumbnail = () => {
+const DieThumbnail = ({ color, face }) => {
 
   return (
     <div className={style['container']}>
-      <img href={`src\assets\images\brain-green.jpg`} />
+      <img src={`./src/assets/images/die-image-${face}-${color}.jpg`} />
     </div>
   )
 }

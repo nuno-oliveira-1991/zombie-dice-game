@@ -20,8 +20,9 @@ export const GameStatsContextProvider = ({ children }) => {
   const [rollCounter, setRollCounter] = useState(0);
   const [diceInsideBox, setDiceInsideBox] = useState(diceBox);
   const [playerHand, setPlayerHand] = useState([]);
-  const [playButtonMessage, setPlayButtonMessage] = useState("Play");
+  const [playButtonMessage, setPlayButtonMessage] = useState('Play');
   const [rollResult, setRollResult] = useState([])
+  const [loadingMessage, setLoadingMessage] = useState('')
 
   const contextValue = {
     score, 
@@ -43,7 +44,9 @@ export const GameStatsContextProvider = ({ children }) => {
     rollResult,
     setRollResult,
     rollCounter,
-    setRollCounter
+    setRollCounter,
+    loadingMessage,
+    setLoadingMessage
   };
 
   return (
