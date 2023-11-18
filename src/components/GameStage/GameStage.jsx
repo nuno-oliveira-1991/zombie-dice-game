@@ -5,7 +5,6 @@ import style from './game-stage-styles.module.scss';
 import { diceBox } from './../../constants.js'
 import DieThumbnail from './DieThumbnail/DieThumbnail.jsx';
 
-
 const GameStage = () => {
   const {
     score,
@@ -39,10 +38,15 @@ const GameStage = () => {
     console.log('Drawing dice...');
     let handSize = 3;
     if (diceInsideBox.length < 3) { 
-      console.log('Dice box is empty, you must end your turn!');
+      console.log('Dice box has insufficient dice, you must end your turn!');
+      setDiceInsideBox(diceBox);
       endTurn();
+      return;
     };
-    const updatedDiceInsideBox = [...diceInsideBox];
+    let updatedDiceInsideBox
+    if (rollCounter === 0) updatedDiceInsideBox = [...diceBox];
+    else updatedDiceInsideBox = [...diceInsideBox];
+
     const drawnDice = [];
     for (let i = 0; i < handSize; i++) {
       let randomDieIndex = Math.floor(Math.random() * updatedDiceInsideBox.length);
@@ -50,9 +54,9 @@ const GameStage = () => {
       updatedDiceInsideBox.splice(randomDieIndex, 1);
       drawnDice.push(die);
     };
-    setDiceInsideBox(updatedDiceInsideBox);
-    console.log(`Dice put in the box - ${diceInsideBox.length}`);
     setPlayerHand(drawnDice);
+    setDiceInsideBox(updatedDiceInsideBox);
+    setPlayButtonMessage('Roll');
     setLoadingMessage('');
   };
 
@@ -60,6 +64,7 @@ const GameStage = () => {
     console.log('Rolling dice...');
     let brainsRollCount = 0;
     let shotsRollCount = 0;
+    let updatedDiceInsideBox = [...diceInsideBox];
     for (let i = 0; i < playerHand.length; i++) {
       let randomFaceIndex = Math.floor(Math.random() * 6);
       let face = playerHand[i].faces[randomFaceIndex];
@@ -71,22 +76,23 @@ const GameStage = () => {
       rollResult.push(resultDie);
       if (face === 'brain') brainsRollCount += 1;
       else if (face === 'shot') shotsRollCount += 1;
-      else diceInsideBox.push(playerHand[i]);
+      else updatedDiceInsideBox.push(playerHand[i]);
     };
     setBrains(brains + brainsRollCount);
     setShots(shots + shotsRollCount);
     setRollResult(rollResult);
     setRollCounter(rollCounter + 1);
     setPlayerHand([]);
+    setDiceInsideBox(updatedDiceInsideBox);
+    setPlayButtonMessage('Draw');
     setLoadingMessage('');
   };
 
   const startTurn = () => {
     console.log('Turn is starting.');
-    if (turn === 0) setTurn(1);
+    if (turn === 0) setTurn(1)
     setTurnPhase('Draw');
     setPlayButtonMessage('Roll');
-    setTimeout(drawDice, 1000);
     setLoadingMessage('Drawing dice ...');
   };
 
@@ -94,38 +100,32 @@ const GameStage = () => {
     console.log('proceeding...');
     if (turnPhase === 'Draw') {
       setTurnPhase('Roll');
-      setPlayButtonMessage('Draw');
-      setTimeout(rollDice, 1000);
+      setPlayButtonMessage('');
       setLoadingMessage('Rolling dice ...');
     } else {
       setTurnPhase('Draw');
-      setPlayButtonMessage('Roll');
+      setPlayButtonMessage('');
       setPlayerHand([]);
       setRollResult([]);
-      setTimeout(drawDice, 1000);
       setLoadingMessage('Drawing dice ...');
     }
   };
 
   const endTurn = () => {
     console.log('Turn is ending.');
-    if (shots < 3) {
-      setScore(score + brains);
-      setDiceInsideBox(diceBox);
-      console.log(`Dice put in the box - ${diceInsideBox.length}`);
-    } else {
-      setDiceInsideBox(diceBox);
-      setLoadingMessage('You died. Drawing dice ...');
-      console.log(`Dice put in the box - ${diceInsideBox.length}`);
-    }
+    if (shots < 3) setScore(score + brains);
+    setDiceInsideBox(diceBox);
     setRollResult([]);
     setRollCounter(0);
     setBrains(0);
     setShots(0);
     setPlayerHand([]);
-    setTurnPhase('');
+    if (turn >= 10) {
+      setTurn(0);
+      setTurnPhase('');
+      setLoadingMessage('');
+    } 
     setTurn(turn + 1);
-    setTimeout(startTurn, 2000);
   };
 
   const handlePlayButtonClick = () => {
@@ -134,23 +134,65 @@ const GameStage = () => {
   };
 
   const handleSkipButtonClick = () => {
-    setDiceInsideBox([...diceBox]);
     endTurn();
   };
-
 
   useEffect(() => {
     const playButton = playButtonRef.current;
     const skipButton = skipButtonRef.current;
   });
 
+
   useEffect(() => {
-    if (shots >= 3) endTurn();
+    if (turn > 0 && turn <= 10 && score < 13 && playerHand.length === 0) {
+      console.log('You are still alive.')
+      startTurn()
+    }
+  }, [turn]);
+
+
+  useEffect(() => {
+    if (shots >= 3) {
+      console.log('You have been shot.')
+      setLoadingMessage('You have been shot.')
+      setTimeout(() => {
+        endTurn();
+      }, 1000);
+    }
   }, [shots]);
 
   useEffect(() => {
-    if (turnPhase === '' && turn !== 0) setPlayButtonMessage('Draw')
-  });
+    if (score >= 13) {
+      console.log('You have won the game.');
+      setTurn(0);
+      setScore(0);
+      setLoadingMessage('You have won the game.')
+      setPlayButtonMessage('Play');
+    }
+    if (turn > 10 && score < 13) {
+      console.log('You have lost the game.');
+      setTurn(0);
+      setScore(0);
+      setPlayButtonMessage('Play');
+    }
+  }, [score]);
+
+  useEffect(() => {
+    if (turnPhase === 'Draw') {
+      setTimeout(() => {
+        drawDice();
+      }, 1000);
+    }
+    if (turnPhase === 'Roll') {
+      setTimeout(() => {
+        rollDice();
+      }, 1000);
+    } 
+  }, [turnPhase]);
+
+
+
+
 
 
   return (
@@ -160,10 +202,11 @@ const GameStage = () => {
         {rollResult.length > 0 && score < 13 && turnPhase === 'Roll' && rollResult.map((die) => <DieThumbnail key={uuidv4()} color={die.color} face={die.face}/>)}
         {loadingMessage !== '' && <span>{loadingMessage}</span>}
         {score >= 13 && <h2>Victory!</h2>}
+        {turn > 10 && <h2>Game Over</h2>}
       </div>
       <div className={style['control-panel']}>
-        {score <= 13 && <button ref={playButtonRef} onClick={handlePlayButtonClick} style={{ visibility: turn === 0 || playerHand.length > 0 || rollResult.length > 0 ? 'visible' : 'hidden'}}>{playButtonMessage}</button>}
-        {score <= 13 && <button ref={skipButtonRef} onClick={handleSkipButtonClick} style={{ visibility: turnPhase !== '' && playerHand.length > 0 || rollResult.length > 0 ? 'visible' : 'hidden'}}>End Turn</button>}
+        {score <= 13 && playButtonMessage !== '' && <button ref={playButtonRef} onClick={handlePlayButtonClick} style={{ visibility: turn === 0 || playerHand.length > 0 || (rollResult.length > 0 && playerHand.length === 0) ? 'visible' : 'hidden'}}>{playButtonMessage}</button>}
+        {score <= 13 && playButtonMessage !== '' && <button ref={skipButtonRef} onClick={handleSkipButtonClick} style={{ visibility: turnPhase === 'Roll' && playerHand.length > 0 || rollResult.length > 0 ? 'visible' : 'hidden'}}>End Turn</button>}
       </div>
     </div>
   );
