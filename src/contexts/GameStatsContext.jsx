@@ -12,6 +12,7 @@ export const useGameStatsContext = () => {
 };
 
 export const GameStatsContextProvider = ({ children }) => {
+  const [gameOutcomeMessage, setGameOutcomeMessage] = useState('')
   const [score, setScore] = useState(0);
   const [turn, setTurn] = useState(0);
   const [turnPhase, setTurnPhase] = useState('');
@@ -46,7 +47,9 @@ export const GameStatsContextProvider = ({ children }) => {
     rollCounter,
     setRollCounter,
     loadingMessage,
-    setLoadingMessage
+    setLoadingMessage,
+    gameOutcomeMessage,
+    setGameOutcomeMessage
   };
 
   return (

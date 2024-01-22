@@ -28,7 +28,9 @@ const GameStage = () => {
     shots,
     setShots,
     loadingMessage,
-    setLoadingMessage
+    setLoadingMessage,
+    gameOutcomeMessage,
+    setGameOutcomeMessage
   } = useGameStatsContext();
 
   const playButtonRef = useRef(null);
@@ -90,7 +92,7 @@ const GameStage = () => {
 
   const startTurn = () => {
     console.log('Turn is starting.');
-    if (turn === 0) setTurn(1)
+    if (turn === 0) setTurn(turn + 1);
     setTurnPhase('Draw');
     setPlayButtonMessage('Roll');
     setLoadingMessage('Drawing dice ...');
@@ -129,6 +131,7 @@ const GameStage = () => {
   };
 
   const handlePlayButtonClick = () => {
+    if (turn === 0) setGameOutcomeMessage('')
     if (turnPhase !== '') proceedTurn();
     else startTurn();
   };
@@ -144,7 +147,7 @@ const GameStage = () => {
 
 
   useEffect(() => {
-    if (turn > 0 && turn <= 10 && score < 13 && playerHand.length === 0) {
+    if (turn > 1 && turn <= 10 && score < 13 && playerHand.length === 0) {
       console.log('You are still alive.')
       startTurn()
     }
@@ -166,16 +169,17 @@ const GameStage = () => {
       console.log('You have won the game.');
       setTurn(0);
       setScore(0);
-      setLoadingMessage('You have won the game.')
+      setGameOutcomeMessage('victory');
       setPlayButtonMessage('Play');
     }
     if (turn > 10 && score < 13) {
       console.log('You have lost the game.');
       setTurn(0);
       setScore(0);
+      setGameOutcomeMessage('game-over');
       setPlayButtonMessage('Play');
     }
-  }, [score]);
+  }, [score, turn]);
 
   useEffect(() => {
     if (turnPhase === 'Draw') {
@@ -197,12 +201,12 @@ const GameStage = () => {
 
   return (
     <div className={style['container']}>
-      <div className={style['roll-panel']} style={{ visibility: turn === 0 ? 'hidden' : 'visible' }}>
+      <div className={style['roll-panel']} style={{ visibility: (turn === 0 && gameOutcomeMessage === '') ? 'hidden' : 'visible' }}>
         {playerHand.length > 0 && score < 13 && turnPhase === 'Draw' && playerHand.map((die) => <div key={uuidv4()} className={style['color-box']}><div style={{ backgroundColor: die.color }}></div></div>)}
         {rollResult.length > 0 && score < 13 && turnPhase === 'Roll' && rollResult.map((die) => <DieThumbnail key={uuidv4()} color={die.color} face={die.face}/>)}
         {loadingMessage !== '' && <span>{loadingMessage}</span>}
-        {score >= 13 && <h2>Victory!</h2>}
-        {turn > 10 && <h2>Game Over</h2>}
+        {gameOutcomeMessage === 'victory' && <h2>Victory</h2>}
+        {gameOutcomeMessage === 'game-over' && <h2>Game Over</h2>}
       </div>
       <div className={style['control-panel']}>
         {score <= 13 && playButtonMessage !== '' && <button ref={playButtonRef} onClick={handlePlayButtonClick} style={{ visibility: turn === 0 || playerHand.length > 0 || (rollResult.length > 0 && playerHand.length === 0) ? 'visible' : 'hidden'}}>{playButtonMessage}</button>}
