@@ -4,7 +4,7 @@ const DieThumbnail = ({ color, face }) => {
 
   return (
     <div className={style['container']}>
-      <img src={`./src/assets/images/die-image-${face}-${color}.jpg`} />
+      <img src={`../../assets/images/die-image-${face}-${color}.jpg`} alt={`${color}-${face} die`} />
     </div>
   )
 }
