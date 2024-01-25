@@ -1,12 +1,12 @@
 import style from './home-styles.module.scss';
-import ScoreBoard from '../../components/ScoreBoard/ScoreBoard';
 import GameStage from '../../components/GameStage/GameStage';
+import GameRules from '../../components/GameRules/Rules';
 
 const Home = () => {
   return (
     <div className={style['container']}>
-      <ScoreBoard />
       <GameStage />
+      <GameRules />
     </div>
   );
 };

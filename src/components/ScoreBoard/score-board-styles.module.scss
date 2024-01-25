@@ -1,9 +1,12 @@
 .container {
   display: flex;
-  justify-content: space-between;
   position: relative;
-  height: 6em;
-  gap: 0.5em;
+  justify-content: space-around;
+  width: 100%;
+  background-color: rgb(41, 40, 40);
+  border-radius: 40px;
+  padding: 0.8em 3em;
+  box-sizing: border-box;
 }
 
 .brain-counter {color:green}
@@ -12,5 +15,11 @@
 
 .score-panel {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
 }

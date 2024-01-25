@@ -1,12 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { useGameStatsContext } from '../../contexts/GameStatsContext';
 import { v4 as uuidv4 } from 'uuid';
+import { Link } from "react-router-dom"
 import style from './game-stage-styles.module.scss';
 import { diceBox } from './../../constants.js'
 import DieThumbnail from './DieThumbnail/DieThumbnail.jsx';
+import ScoreBoard from '../../components/ScoreBoard/ScoreBoard';
 
 const GameStage = () => {
   const {
+    rulesVisibility,
+    setRulesVisibility,
     score,
     setScore,
     turn,
@@ -140,6 +144,10 @@ const GameStage = () => {
     endTurn();
   };
 
+  const handleRulesButtonClick = (event) => {
+    setRulesVisibility(true)
+  }
+
   useEffect(() => {
     const playButton = playButtonRef.current;
     const skipButton = skipButtonRef.current;
@@ -201,6 +209,7 @@ const GameStage = () => {
 
   return (
     <div className={style['container']}>
+      <ScoreBoard />
       <div className={style['roll-panel']} style={{ visibility: (turn === 0 && gameOutcomeMessage === '') ? 'hidden' : 'visible' }}>
         {playerHand.length > 0 && score < 13 && turnPhase === 'Draw' && playerHand.map((die) => <div key={uuidv4()} className={style['color-box']}><div style={{ backgroundColor: die.color }}></div></div>)}
         {rollResult.length > 0 && score < 13 && turnPhase === 'Roll' && rollResult.map((die) => <DieThumbnail key={uuidv4()} color={die.color} face={die.face}/>)}
@@ -211,6 +220,7 @@ const GameStage = () => {
       <div className={style['control-panel']}>
         {score <= 13 && playButtonMessage !== '' && <button ref={playButtonRef} onClick={handlePlayButtonClick} style={{ visibility: turn === 0 || playerHand.length > 0 || (rollResult.length > 0 && playerHand.length === 0) ? 'visible' : 'hidden'}}>{playButtonMessage}</button>}
         {score <= 13 && playButtonMessage !== '' && <button ref={skipButtonRef} onClick={handleSkipButtonClick} style={{ visibility: turnPhase === 'Roll' && playerHand.length > 0 || rollResult.length > 0 ? 'visible' : 'hidden'}}>End Turn</button>}
+        <button onClick={handleRulesButtonClick}>Rules</button>
       </div>
     </div>
   );

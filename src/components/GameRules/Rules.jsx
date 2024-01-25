@@ -1,5 +1,6 @@
+import style from './game-rules-styles.module.scss'
 
-const Rules = () => {
+const GameRules = () => {
 
   return (
     <div className={style['container']}>
@@ -13,4 +14,4 @@ const Rules = () => {
   )
 }
 
-export default Rules;
+export default GameRules;
