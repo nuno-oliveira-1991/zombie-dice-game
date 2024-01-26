@@ -62,7 +62,7 @@ const GameStage = () => {
     };
     setPlayerHand(drawnDice);
     setDiceInsideBox(updatedDiceInsideBox);
-    setPlayButtonMessage('Roll');
+    setPlayButtonMessage('ROLL');
     setLoadingMessage('');
   };
 
@@ -90,26 +90,26 @@ const GameStage = () => {
     setRollCounter(rollCounter + 1);
     setPlayerHand([]);
     setDiceInsideBox(updatedDiceInsideBox);
-    setPlayButtonMessage('Draw');
+    setPlayButtonMessage('DRAW');
     setLoadingMessage('');
   };
 
   const startTurn = () => {
     console.log('Turn is starting.');
     if (turn === 0) setTurn(turn + 1);
-    setTurnPhase('Draw');
-    setPlayButtonMessage('Roll');
+    setTurnPhase('DRAW');
+    setPlayButtonMessage('ROLL');
     setLoadingMessage('Drawing dice ...');
   };
 
   const proceedTurn = () => {
     console.log('proceeding...');
-    if (turnPhase === 'Draw') {
-      setTurnPhase('Roll');
+    if (turnPhase === 'DRAW') {
+      setTurnPhase('ROLL');
       setPlayButtonMessage('');
       setLoadingMessage('Rolling dice ...');
     } else {
-      setTurnPhase('Draw');
+      setTurnPhase('DRAW');
       setPlayButtonMessage('');
       setPlayerHand([]);
       setRollResult([]);
@@ -177,25 +177,25 @@ const GameStage = () => {
       console.log('You have won the game.');
       setTurn(0);
       setScore(0);
-      setGameOutcomeMessage('victory');
-      setPlayButtonMessage('Play');
+      setGameOutcomeMessage('VICTORY');
+      setPlayButtonMessage('PLAY');
     }
     if (turn > 10 && score < 13) {
       console.log('You have lost the game.');
       setTurn(0);
       setScore(0);
       setGameOutcomeMessage('game-over');
-      setPlayButtonMessage('Play');
+      setPlayButtonMessage('PLAY');
     }
   }, [score, turn]);
 
   useEffect(() => {
-    if (turnPhase === 'Draw') {
+    if (turnPhase === 'DRAW') {
       setTimeout(() => {
         drawDice();
       }, 1000);
     }
-    if (turnPhase === 'Roll') {
+    if (turnPhase === 'ROLL') {
       setTimeout(() => {
         rollDice();
       }, 1000);
@@ -211,16 +211,16 @@ const GameStage = () => {
     <div className={style['container']}>
       <ScoreBoard />
       <div className={style['roll-panel']} style={{ visibility: (turn === 0 && gameOutcomeMessage === '') ? 'hidden' : 'visible' }}>
-        {playerHand.length > 0 && score < 13 && turnPhase === 'Draw' && playerHand.map((die) => <div key={uuidv4()} className={style['color-box']}><div style={{ backgroundColor: die.color }}></div></div>)}
-        {rollResult.length > 0 && score < 13 && turnPhase === 'Roll' && rollResult.map((die) => <DieThumbnail key={uuidv4()} color={die.color} face={die.face}/>)}
+        {playerHand.length > 0 && score < 13 && turnPhase === 'DRAW' && playerHand.map((die) => <div key={uuidv4()} className={style['color-box']}><div style={{ backgroundColor: die.color }}></div></div>)}
+        {rollResult.length > 0 && score < 13 && turnPhase === 'ROLL' && rollResult.map((die) => <DieThumbnail key={uuidv4()} color={die.color} face={die.face}/>)}
         {loadingMessage !== '' && <span>{loadingMessage}</span>}
-        {gameOutcomeMessage === 'victory' && <h2>Victory</h2>}
+        {gameOutcomeMessage === 'VICTORY' && <h2>VICTORY</h2>}
         {gameOutcomeMessage === 'game-over' && <h2>Game Over</h2>}
       </div>
       <div className={style['control-panel']}>
-        {score <= 13 && playButtonMessage !== '' && <button ref={playButtonRef} onClick={handlePlayButtonClick} style={{ visibility: turn === 0 || playerHand.length > 0 || (rollResult.length > 0 && playerHand.length === 0) ? 'visible' : 'hidden'}}>{playButtonMessage}</button>}
-        {score <= 13 && playButtonMessage !== '' && <button ref={skipButtonRef} onClick={handleSkipButtonClick} style={{ visibility: turnPhase === 'Roll' && playerHand.length > 0 || rollResult.length > 0 ? 'visible' : 'hidden'}}>End Turn</button>}
-        <button onClick={handleRulesButtonClick}>Rules</button>
+        {score <= 13 && <button ref={playButtonRef} onClick={handlePlayButtonClick} style={{ visibility: turn === 0 || playerHand.length > 0 || (rollResult.length > 0 && playerHand.length === 0) ? 'visible' : 'hidden', display: playButtonMessage === '' ? 'hidden' : 'block'}}>{playButtonMessage}</button>}
+        {score <= 13 && <button ref={skipButtonRef} onClick={handleSkipButtonClick} style={{ visibility: turnPhase === 'ROLL' && playerHand.length > 0 || rollResult.length > 0 ? 'visible' : 'hidden'}}>END  TURN</button>}
+        <button onClick={handleRulesButtonClick}>RULES</button>
       </div>
     </div>
   );
