@@ -3,10 +3,7 @@
   flex-direction: column;
   position: relative;
   box-sizing: border-box;
-  width: 80%;
-  background-color: gray;
-  border-radius: 40px;
-  padding: 2em;
+  width: 100%;
 }
 
 .roll-panel {
@@ -21,8 +18,6 @@
   width: 100%;
   padding: 2em;
   gap: 1em;
-  border-radius: 40px;
-  margin: 4em 0;
 }
 .roll-panel h2 {
   color: white;
