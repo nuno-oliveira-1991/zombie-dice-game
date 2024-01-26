@@ -10,7 +10,6 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/rules" element={<Rules />} />
         </Routes>
       </BrowserRouter>
     </GameStatsContextProvider>

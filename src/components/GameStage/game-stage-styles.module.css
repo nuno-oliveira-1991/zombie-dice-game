@@ -3,7 +3,10 @@
   flex-direction: column;
   position: relative;
   box-sizing: border-box;
-  width: 100%;
+  width: 80%;
+  background-color: gray;
+  border-radius: 40px;
+  padding: 2em;
 }
 
 .roll-panel {
@@ -18,7 +21,10 @@
   width: 100%;
   padding: 2em;
   gap: 1em;
+  border-radius: 40px;
+  margin: 4em 0;
 }
+
 .roll-panel h2 {
   color: white;
 }
@@ -32,6 +38,7 @@
   width: 100%;
   gap: 1em;
 }
+
 .control-panel button {
   border: none;
   color: white;
@@ -50,6 +57,7 @@
   width: 10em;
   height: 10em;
 }
+
 .color-box div {
   background-color: rgb(43, 221, 52);
   border-radius: 100%;
@@ -62,4 +70,4 @@
     box-sizing: border-box;
     margin: 2em 0;
   }
-}/*# sourceMappingURL=game-stage-styles.module.css.map */
+} /*# sourceMappingURL=game-stage-styles.module.css.map */
