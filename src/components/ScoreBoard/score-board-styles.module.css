@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  position: relative;
+  justify-content: space-around;
+  width: 100%;
+  background-color: rgb(41, 40, 40);
+  border-radius: 40px;
+  padding: 0.8em 3em;
+  box-sizing: border-box;
+}
+
+.brain-counter {
+  color: green;
+}
+
+.shot-counter {
+  color: red;
+}
+
+.score-panel {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.score-panel div {
+  display: flex;
+  flex-direction: column;
+}/*# sourceMappingURL=score-board-styles.module.css.map */
