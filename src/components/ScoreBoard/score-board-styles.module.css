@@ -9,17 +9,20 @@
   box-sizing: border-box;
 }
 
-.brain-counter {color:green}
+.brain-counter {
+  color: green;
+}
 
-.shot-counter {color:red}
+.shot-counter {
+  color: red;
+}
 
 .score-panel {
   display: flex;
   justify-content: space-between;
   width: 100%;
-
-  div {
-    display: flex;
-    flex-direction: column;
-  }
 }
+.score-panel div {
+  display: flex;
+  flex-direction: column;
+}/*# sourceMappingURL=score-board-styles.module.css.map */

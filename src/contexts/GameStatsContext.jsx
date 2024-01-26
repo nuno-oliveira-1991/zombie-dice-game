@@ -12,6 +12,8 @@ export const useGameStatsContext = () => {
 };
 
 export const GameStatsContextProvider = ({ children }) => {
+  const [rulesVisibilty, setRulesVisibility] = useState(false);
+  const [gameOutcomeMessage, setGameOutcomeMessage] = useState('');
   const [score, setScore] = useState(0);
   const [turn, setTurn] = useState(0);
   const [turnPhase, setTurnPhase] = useState('');
@@ -25,6 +27,8 @@ export const GameStatsContextProvider = ({ children }) => {
   const [loadingMessage, setLoadingMessage] = useState('')
 
   const contextValue = {
+    rulesVisibilty,
+    setRulesVisibility,
     score, 
     setScore,
     turn,
@@ -46,7 +50,9 @@ export const GameStatsContextProvider = ({ children }) => {
     rollCounter,
     setRollCounter,
     loadingMessage,
-    setLoadingMessage
+    setLoadingMessage,
+    gameOutcomeMessage,
+    setGameOutcomeMessage
   };
 
   return (

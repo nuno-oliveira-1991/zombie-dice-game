@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { GameStatsContextProvider } from './contexts/GameStatsContext';
 import Home from './pages/Home/Home';
-import Rules from './pages/Rules/Rules';
 
 const App = () => {
   return (

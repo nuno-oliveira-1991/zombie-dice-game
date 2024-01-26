@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  width: 10em;
+  height: 10em;
+  border-radius: 8px;
+}
+.container img {
+  width: 10em;
+  height: 10em;
+  border-radius: 8px;
+}/*# sourceMappingURL=die-thumb-styles.module.css.map */
