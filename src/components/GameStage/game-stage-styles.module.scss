@@ -22,7 +22,7 @@
   padding: 2em;
   gap: 1em;
   border-radius: 40px;
-  margin: 4em 0;
+  margin: 2em 0;
   letter-spacing: 0.2em;
 }
 .roll-panel h2 {
@@ -66,31 +66,26 @@
   width: 50%;
 }
 
-@media screen and (max-width: 1300px) {
-  .roll-panel {
-    box-sizing: border-box;
-    margin: 2em 0;
-  }
-}
 
 @media only screen and (max-width: 900px) {
   .container {
     width: 100%;
     height: 100%;
     padding: 1em;
-    border-radius: 16px;
+    border-radius: 8px;
   }
 
   .roll-panel {
-    font-size: 14px;
+    font-size: 50%;
     flex-direction: column;
     height: 100%;
-    margin: 1em 0;
-    border-radius: 16px;
+    margin: 2em 0;
+    border-radius: 8px;
   }
 
   .color-box {
-    height: 20%;  
+    height: 20%;
+    margin: 1em 0;
     border-radius: 8px;
   }
 
@@ -100,6 +95,7 @@
     button {
       width: 100%;
       border-radius: 12px;
+      font-size: 60%;
     }
   }
 }

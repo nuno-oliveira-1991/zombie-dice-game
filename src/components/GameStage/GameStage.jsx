@@ -208,7 +208,7 @@ const GameStage = () => {
   return (
     <div className={style['container']}>
       <ScoreBoard />
-      <div className={style['roll-panel']} style={{ visibility: (turn === 0 && gameOutcomeMessage === '') ? 'hidden' : 'visible' }}>
+      <div className={style['roll-panel']}>
         {playerHand.length > 0 && score < 13 && turnPhase === 'DRAW' && playerHand.map((die) => <div key={uuidv4()} className={style['color-box']}><div style={{ backgroundColor: die.color }}></div></div>)}
         {rollResult.length > 0 && score < 13 && turnPhase === 'ROLL' && rollResult.map((die) => <DieThumbnail key={uuidv4()} color={die.color} face={die.face}/>)}
         {loadingMessage !== '' && <span>{loadingMessage}</span>}
