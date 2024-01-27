@@ -24,3 +24,19 @@
     flex-direction: column;
   }
 }
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 1.5em;
+    font-size: 45%;
+    border-radius: 12px;
+
+  }
+
+  .score-panel {
+    
+    div {
+      margin-bottom: 0.3em;
+    }
+  }
+}

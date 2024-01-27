@@ -135,12 +135,15 @@ const GameStage = () => {
   };
 
   const handlePlayButtonClick = () => {
-    if (turn === 0) setGameOutcomeMessage('')
+    if (loadingMessage !== '') return;
+    setGameOutcomeMessage('');
     if (turnPhase !== '') proceedTurn();
     else startTurn();
   };
 
   const handleSkipButtonClick = () => {
+    if (loadingMessage !== '') return;
+    if ((turnPhase !== 'ROLL' && playerHand.length !== 3) || rollCounter === 0) return;
     endTurn();
   };
 
@@ -202,11 +205,6 @@ const GameStage = () => {
     } 
   }, [turnPhase]);
 
-
-
-
-
-
   return (
     <div className={style['container']}>
       <ScoreBoard />
@@ -218,9 +216,36 @@ const GameStage = () => {
         {gameOutcomeMessage === 'game-over' && <h2>Game Over</h2>}
       </div>
       <div className={style['control-panel']}>
-        {score <= 13 && <button ref={playButtonRef} onClick={handlePlayButtonClick} style={{ visibility: turn === 0 || playerHand.length > 0 || (rollResult.length > 0 && playerHand.length === 0) ? 'visible' : 'hidden', display: playButtonMessage === '' ? 'hidden' : 'block'}}>{playButtonMessage}</button>}
-        {score <= 13 && <button ref={skipButtonRef} onClick={handleSkipButtonClick} style={{ visibility: turnPhase === 'ROLL' && playerHand.length > 0 || rollResult.length > 0 ? 'visible' : 'hidden'}}>END  TURN</button>}
-        <button onClick={handleRulesButtonClick}>RULES</button>
+        {score <= 13 && 
+          <button 
+            ref={playButtonRef} 
+            onClick={handlePlayButtonClick} 
+            style={{ opacity: 
+              turn === 0 ||
+              playButtonMessage !== '' &&
+              playerHand.length > 0 ||
+              (rollResult.length > 0 &&
+              playerHand.length === 0) 
+              ? 
+              '100%' 
+              : 
+              '40%'
+              }}>{playButtonMessage}</button>}
+        {turn !== 0 && score <= 13 &&
+          <button 
+            ref={skipButtonRef} 
+            onClick={handleSkipButtonClick} 
+            style={{ 
+              opacity: (
+                playerHand.length === 0 &&
+                loadingMessage === '' &&
+                rollCounter > 0 
+              ) ? '100%' : '40%'
+            }}
+          >
+            END TURN
+          </button>}
+        {turn === 0 && <button onClick={handleRulesButtonClick}>RULES</button>}
       </div>
     </div>
   );

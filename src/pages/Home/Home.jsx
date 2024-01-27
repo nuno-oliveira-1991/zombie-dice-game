@@ -3,6 +3,7 @@ import GameStage from '../../components/GameStage/GameStage';
 import GameRules from '../../components/GameRules/Rules';
 
 const Home = () => {
+  
   return (
     <div className={style['container']}>
       <GameStage />

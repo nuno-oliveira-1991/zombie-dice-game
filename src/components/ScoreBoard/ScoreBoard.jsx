@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import React from 'react';
 import { useGameStatsContext } from '../../contexts/GameStatsContext';
-import style from './score-board-styles.module.scss'
+import style from './score-board-styles.module.scss';
 
 const ScoreBoard = () => {
   const {
@@ -11,31 +11,31 @@ const ScoreBoard = () => {
     shots,
     brains,
     rollCounter,
-    playerHand
+    playerHand,
   } = useGameStatsContext();
 
   return (
     <div className={style['container']}>
       <div className={style['score-panel']}>
-        <div>
-          <span>{`Turn : ${turn}`}</span>
-          <span>{`Phase : ${turnPhase}`}</span>
+        <div className={style['score-group']}>
+          <span>{`Turn: ${turn}`}</span>
+          <span>{`Phase: ${turnPhase}`}</span>
         </div>
-        <div>
-          <span>{`Dice in Box : ${diceInsideBox.length}`}</span>
-          <span>{`Dice in Hand : ${playerHand.length}`}</span>
+        <div className={style['score-group']}>
+          <span>{`Dice in Box: ${diceInsideBox.length}`}</span>
+          <span>{`Dice in Hand: ${playerHand.length}`}</span>
         </div>
-        <div>
-          <span>{`Score : ${score}`}</span>
-          <span>{`Rolls : ${rollCounter}`}</span>
+        <div className={style['score-group']}>
+          <span>{`Score: ${score}`}</span>
+          <span>{`Rolls: ${rollCounter}`}</span>
         </div>
-        <div>
-          <span className={style['brain-counter']}>{`Brains : ${brains}`}</span>
-          <span className={style['shot-counter']}>{`Shots : ${shots}`}</span>
+        <div className={style['score-group']}>
+          <span className={style['brain-counter']}>{`Brains: ${brains}`}</span>
+          <span className={style['shot-counter']}>{`Shots: ${shots}`}</span>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ScoreBoard;
