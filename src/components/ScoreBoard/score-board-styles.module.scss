@@ -46,3 +46,17 @@
     }
   }
 }
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 1.5em;
+    font-size: 40%;
+    border-radius: 8px;
+  }
+
+  .score-panel {
+    div {
+      margin-bottom: 0.3em;
+    }
+  }
+}
