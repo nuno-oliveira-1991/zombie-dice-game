@@ -106,11 +106,9 @@ const GameStage = () => {
     console.log('proceeding...');
     if (turnPhase === 'DRAW') {
       setTurnPhase('ROLL');
-      setPlayButtonMessage('');
       setLoadingMessage('Rolling dice ...');
     } else {
       setTurnPhase('DRAW');
-      setPlayButtonMessage('');
       setPlayerHand([]);
       setRollResult([]);
       setLoadingMessage('Drawing dice ...');
@@ -222,10 +220,8 @@ const GameStage = () => {
             onClick={handlePlayButtonClick} 
             style={{ opacity: 
               turn === 0 ||
-              playButtonMessage !== '' &&
-              playerHand.length > 0 ||
-              (rollResult.length > 0 &&
-              playerHand.length === 0) 
+              loadingMessage !== 'Rolling dice ...' &&
+              loadingMessage !== 'Drawing dice ...'
               ? 
               '100%' 
               : 
