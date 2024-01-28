@@ -12,7 +12,7 @@ export const useGameStatsContext = () => {
 };
 
 export const GameStatsContextProvider = ({ children }) => {
-  const [rulesVisibilty, setRulesVisibility] = useState(false);
+  const [rulesVisibility, setRulesVisibility] = useState(false);
   const [gameOutcomeMessage, setGameOutcomeMessage] = useState('');
   const [score, setScore] = useState(0);
   const [turn, setTurn] = useState(0);
@@ -27,7 +27,7 @@ export const GameStatsContextProvider = ({ children }) => {
   const [loadingMessage, setLoadingMessage] = useState('')
 
   const contextValue = {
-    rulesVisibilty,
+    rulesVisibility,
     setRulesVisibility,
     score, 
     setScore,

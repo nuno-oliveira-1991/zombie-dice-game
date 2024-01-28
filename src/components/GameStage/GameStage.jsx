@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useGameStatsContext } from '../../contexts/GameStatsContext';
 import { v4 as uuidv4 } from 'uuid';
-import { Link } from "react-router-dom"
 import style from './game-stage-styles.module.scss';
 import { diceBox } from './../../constants.js'
 import DieThumbnail from './DieThumbnail/DieThumbnail.jsx';
@@ -9,7 +8,6 @@ import ScoreBoard from '../../components/ScoreBoard/ScoreBoard';
 
 const GameStage = () => {
   const {
-    rulesVisibility,
     setRulesVisibility,
     score,
     setScore,
@@ -43,23 +41,24 @@ const GameStage = () => {
   const drawDice = () => {
     console.log('Drawing dice...');
     let handSize = 3;
-    if (diceInsideBox.length < 3) { 
-      console.log('Dice box has insufficient dice, you must end your turn!');
-      setDiceInsideBox(diceBox);
-      endTurn();
-      return;
-    };
-    let updatedDiceInsideBox
-    if (rollCounter === 0) updatedDiceInsideBox = [...diceBox];
-    else updatedDiceInsideBox = [...diceInsideBox];
-
+    let updatedDiceInsideBox;
+  
+    if (diceInsideBox.length < 3) {
+      console.log('Dice box has insufficient dice, resetting to default quantity!');
+      updatedDiceInsideBox = [...diceBox];
+    } else {
+      if (rollCounter === 0) updatedDiceInsideBox = [...diceBox];
+      else updatedDiceInsideBox = [...diceInsideBox];
+    }
+  
     const drawnDice = [];
     for (let i = 0; i < handSize; i++) {
       let randomDieIndex = Math.floor(Math.random() * updatedDiceInsideBox.length);
       let die = updatedDiceInsideBox[randomDieIndex];
       updatedDiceInsideBox.splice(randomDieIndex, 1);
       drawnDice.push(die);
-    };
+    }
+  
     setPlayerHand(drawnDice);
     setDiceInsideBox(updatedDiceInsideBox);
     setPlayButtonMessage('ROLL');
@@ -146,7 +145,7 @@ const GameStage = () => {
   };
 
   const handleRulesButtonClick = (event) => {
-    setRulesVisibility(true)
+    setRulesVisibility(true);
   }
 
   useEffect(() => {
@@ -216,6 +215,7 @@ const GameStage = () => {
       <div className={style['control-panel']}>
         {score <= 13 && 
           <button 
+            className='btn'
             ref={playButtonRef} 
             onClick={handlePlayButtonClick} 
             style={{ opacity: 
@@ -229,6 +229,7 @@ const GameStage = () => {
               }}>{playButtonMessage}</button>}
         {turn !== 0 && score <= 13 &&
           <button 
+            className='btn'
             ref={skipButtonRef} 
             onClick={handleSkipButtonClick} 
             style={{ 
@@ -241,7 +242,7 @@ const GameStage = () => {
           >
             END TURN
           </button>}
-        {turn === 0 && <button onClick={handleRulesButtonClick}>RULES</button>}
+        {turn === 0 && <button className='btn' onClick={handleRulesButtonClick}>RULES</button>}
       </div>
     </div>
   );

@@ -1,13 +1,18 @@
+import { useGameStatsContext } from '../../contexts/GameStatsContext';
 import style from './home-styles.module.scss';
 import GameStage from '../../components/GameStage/GameStage';
-import GameRules from '../../components/GameRules/Rules';
+import GameRules from '../../components/GameRules/GameRules';
 
 const Home = () => {
-  
+  const {
+    rulesVisibility
+  } = useGameStatsContext()
+
+
   return (
     <div className={style['container']}>
       <GameStage />
-      <GameRules />
+      {rulesVisibility === true && <GameRules />}
     </div>
   );
 };

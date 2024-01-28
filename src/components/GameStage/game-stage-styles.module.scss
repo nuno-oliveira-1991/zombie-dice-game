@@ -9,7 +9,7 @@
   background-color: gray;
   border-radius: 40px;
   padding: 2em;
-  align-items: flex-start; /* Align content at the start of the cross-axis */
+  align-items: flex-start;
 }
 
 .roll-panel {
@@ -41,15 +41,6 @@
   width: 100%;
   gap: 1em;
 }
-.control-panel button {
-  border: none;
-  color: rgb(211, 211, 211);
-  background-color: rgb(109, 109, 109);
-  height: 3em;
-  width: 50%;
-  border-radius: 24px;
-  letter-spacing: 0.8em;
-}
 
 .color-box {
   background-color: black;
@@ -68,7 +59,6 @@
   height: 50%;
   width: 50%;
 }
-
 
 @media only screen and (max-width: 900px) {
   .container {
@@ -94,11 +84,5 @@
 
   .control-panel {
     flex-direction: column;
-
-    button {
-      width: 100%;
-      border-radius: 12px;
-      font-size: 60%;
-    }
   }
 }
